@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import SidePanel from "../components/side-panel";
 import PromptInput from "../components/prompt-input";
+import ChatContextProvider from "./chat-context";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,12 +23,13 @@ export default function RootLayout({
 }>) {
   return (
     <html className="" lang="en">
+      <ChatContextProvider>
       <body className={`h-svh relative bg-slate-200 dark:bg-slate-800 ${inter.className}`}>
         <div className="flex max-h-svh">
           <div className="hidden">
             <SidePanel />
           </div>
-          <div className="w-full flex flex-col">
+          <div className="min-h-svh justify-between w-full flex flex-col">
             {children}
             <div className="w-full pr-[8px]">
               <div className="p-4 w-full md:max-w-3xl lg:max-w-[40rem] xl:max-w-[48rem] mx-auto">
@@ -37,6 +39,7 @@ export default function RootLayout({
           </div>
         </div>
       </body>
+      </ChatContextProvider>
     </html>
   );
 }

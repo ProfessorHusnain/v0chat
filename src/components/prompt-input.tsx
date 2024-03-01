@@ -1,7 +1,43 @@
+'use client'
+import { useContext, useRef, useEffect } from "react";
+import Textarea from 'react-textarea-autosize'
+import { ChatContext } from "../app/chat-context";
+import {useChat} from 'ai/react'
+
+
+
 export default function PromptInput() {
+    const { dispatch } = useContext(ChatContext);
+    const formRef = useRef<HTMLFormElement>(null);
+    const { messages, input, handleInputChange, handleSubmit } = useChat();
+
+
+    useEffect(() => {
+    dispatch({ type: "UPDATE_MESSAGES", payload: messages });
+    }, [messages]);
+
+
+
+    useEffect(() => {
+        const handleKeyPress = (event:KeyboardEvent) => {
+          if (event.key === 'Enter'&&event.shiftKey===false&&window.screen.width>640) {
+            event.preventDefault();
+            formRef.current?.requestSubmit();
+          }
+        };
+    
+        document.addEventListener('keydown', handleKeyPress);
+        return () => {
+          document.removeEventListener('keydown', handleKeyPress);
+        };
+    }, []);
+
+
     return (
         <form
-            className="flex max-w-full rounded-xl bg-slate-200 p-2  dark:bg-slate-900"
+            className="flex max-w-full rounded-xl bg-slate-300 p-2  dark:bg-slate-900"
+            onSubmit={handleSubmit}
+            ref={formRef}
         >
             <label htmlFor="prompt" className="sr-only">Enter your prompt</label>
             <div>
@@ -27,15 +63,18 @@ export default function PromptInput() {
                     <span className="sr-only">Attach file</span>
                 </button>
             </div>
-            <textarea
+            <Textarea
                 id="prompt"
+                name="prompt"
                 rows={1}
-                className="max-h-25 resize-none overflow-y-hidden m-2 flex min-h-full w-full rounded-md border border-slate-300 bg-slate-200 p-2 text-base text-slate-900 placeholder-slate-400 focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600 dark:border-slate-300/20 dark:bg-slate-800 dark:text-slate-200 dark:placeholder-slate-400 dark:focus:border-blue-600 dark:focus:ring-blue-600"
+                className="resize-none max-h-[90svh] overflow-y-hidden m-2 flex min-h-full w-full rounded-md border border-slate-300 bg-slate-200 p-2 text-base text-slate-900 placeholder-slate-400 focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600 dark:border-slate-300/20 dark:bg-slate-800 dark:text-slate-200 dark:placeholder-slate-400 dark:focus:border-blue-600 dark:focus:ring-blue-600"
                 placeholder="Enter your prompt"
-            ></textarea>
+                onChange={handleInputChange}
+                value={input}
+            ></Textarea>
             <div className="self-end pb-2">
                 <button
-                    className="inline-flex hover:text-blue-600 dark:text-slate-200 dark:hover:text-blue-600 sm:p-2"
+                    className="inline-flex hover:text-blue-600 text-slate-800 dark:text-slate-200 dark:hover:text-blue-600 sm:p-2"
                     type="submit"
                 >
                     <svg
