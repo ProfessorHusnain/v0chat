@@ -3,13 +3,13 @@ import { useContext, useRef, useEffect, Suspense } from 'react'
 import { ChatContext } from '../app/chat-context'
 
 export default function PromptMessage() {
-    const { state } = useContext(ChatContext)
+    const { messages } = useContext(ChatContext)
 
     return (
         <div
             className="flex-1 rounded-xl bg-slate-200 p-4 text-sm leading-6 text-slate-900 dark:bg-slate-800 dark:text-slate-300 sm:text-base sm:leading-7"
         >
-            {state.map((data, key) => {
+            {messages.map((data, key) => {
                 if (data.role === 'user') {
                     return (
                         <div key={key} className="flex flex-row px-2 py-4 sm:px-4">

@@ -1,5 +1,5 @@
 'use client'
-import { useContext, useRef, useEffect } from "react";
+import { useState, useContext, useRef, useEffect } from "react";
 import Textarea from 'react-textarea-autosize'
 import { ChatContext } from "../app/chat-context";
 import {useChat} from 'ai/react'
@@ -7,16 +7,8 @@ import {useChat} from 'ai/react'
 
 
 export default function PromptInput() {
-    const { dispatch } = useContext(ChatContext);
+    const { input, handleInputChange, handleSubmit } = useContext(ChatContext);
     const formRef = useRef<HTMLFormElement>(null);
-    const { messages, input, handleInputChange, handleSubmit } = useChat();
-
-
-    useEffect(() => {
-    dispatch({ type: "UPDATE_MESSAGES", payload: messages });
-    }, [messages]);
-
-
 
     useEffect(() => {
         const handleKeyPress = (event:KeyboardEvent) => {

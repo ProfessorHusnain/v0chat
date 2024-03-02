@@ -26,7 +26,7 @@ export default function RootLayout({
       <ChatContextProvider>
       <body className={`h-svh relative bg-slate-200 dark:bg-slate-800 ${inter.className}`}>
         <div className="flex max-h-svh">
-          <div className="hidden">
+          <div className="">
             <SidePanel />
           </div>
           <div className="min-h-svh justify-between w-full flex flex-col">

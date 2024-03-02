@@ -1,37 +1,45 @@
 "use client"
-import { createContext, useReducer } from "react";
+import { createContext } from "react";
+import { useChat } from "ai/react";
 
 interface DataItem {
-    role: string;
+    role: "function" | "user" | "assistant" | "data" | "system" | "tool";
     content: string;
+    id: string;
+    createdAt?: Date;
 }
 
-const initialData:DataItem[] = [];
+const initialData: DataItem[] = [        {
+    "content": "where is pakistanPakistan is located in South Asia, bordered by India to the east, Afghanistan and Iran to the west, China to the north, and the Arabian Sea to the south.Pakistan is located in South Asia, bordered by India to the east, Afghanistan and Iran to the west, China to the north, and the Arabian Sea to the south.Pakistan is located in South Asia, bordered by India to the east, Afghanistan and Iran to the west, China to the north, and the Arabian Sea to the south.Pakistan is located in South Asia, bordered by India to the east, Afghanistan and Iran to the west, China to the north, and the Arabian Sea to the south.",
+    "role": "user",
+    "createdAt": new Date("2024-03-01T10:55:11.594Z"),
+    "id": "W9JwPv9"
+},
+{
+    "id": "t9dXFxv",
+    "createdAt": new Date("2024-03-01T10:45:17.296Z"),
+    "content": "Pakistan is located in South Asia, bordered by India to the east, Afghanistan and Iran to the west, China to the north, and the Arabian Sea to the south.Pakistan is located in South Asia, bordered by India to the east, Afghanistan and Iran to the west, China to the north, and the Arabian Sea to the south.Pakistan is located in South Asia, bordered by India to the east, Afghanistan and Iran to the west, China to the north, and the Arabian Sea to the south.Pakistan is located in South Asia, bordered by India to the east, Afghanistan and Iran to the west, China to the north, and the Arabian Sea to the south.",
+    "role": "assistant"
+},];
 
-interface ContextValue {
-    state: DataItem[];
-    dispatch: React.Dispatch<any>;
-}
-
-export const ChatContext = createContext<ContextValue>({ state: initialData, dispatch: () => {} });
+export const ChatContext = createContext({
+    messages: initialData,
+    input: "",
+    handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => {},
+    handleSubmit: (event: React.FormEvent<HTMLFormElement>) => {},
+});
 
 
 export default function ChatContextProvider({children}: Readonly<{
     children: React.ReactNode;
   }>) {
-    const [state, dispatch] = useReducer(reducer, []);
-    return (
-        <ChatContext.Provider value={{state, dispatch}}>
-            {children}
-        </ChatContext.Provider>
-    );
-}
 
-function reducer(state: DataItem[], action: {type: string, payload: any}) {
-    switch (action.type) {
-        case "UPDATE_MESSAGES":
-            return action.payload;
-        default:
-            return state;
-    }
+    const { messages, input, handleInputChange, handleSubmit } = useChat(
+        { initialMessages: initialData }
+    );
+    return (
+        <ChatContext.Provider value={{ messages, input, handleInputChange, handleSubmit }}>
+            {children}
+        </ChatContext.Provider> 
+    );
 }
