@@ -1,8 +1,8 @@
 "use client";
 import Image from "next/image";
 import { useContext, useRef, useEffect } from "react";
-import { ChatContext } from "../context/chat-context";
-import PromptMessage from "../components/prompt-message";
+import { ChatContext } from "../../context/chat-context";
+import PromptMessage from "../../components/prompt-message";
 
 export default function Home() {
   const { messages } = useContext(ChatContext);
@@ -18,7 +18,9 @@ export default function Home() {
       <div
         ref={ref}
         className=" md:max-w-3xl lg:max-w-[40rem] xl:max-w-[48rem] mx-auto"
-      ></div>
+      >
+        <PromptMessage />
+      </div>
     </main>
   );
 }
