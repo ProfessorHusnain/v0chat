@@ -10,15 +10,19 @@
   },
   "dependencies": {
     "ai": "^3.0.0",
+    "bcryptjs": "^2.4.3",
     "clipboard-copy": "^4.0.1",
     "dot-env": "^0.0.1",
+    "mongoose": "^8.2.1",
     "next": "14.1.0",
+    "next-auth": "^4.24.7",
     "openai": "^4.28.4",
     "react": "^18",
     "react-dom": "^18",
     "react-textarea-autosize": "^8.5.3"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

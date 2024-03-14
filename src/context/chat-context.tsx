@@ -23,10 +23,14 @@ const initialData: DataItem[] = [        {
 },];
 
 export const ChatContext = createContext({
-    messages: initialData,
-    input: "",
-    handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => {},
-    handleSubmit: (event: React.FormEvent<HTMLFormElement>) => {},
+  messages: initialData,
+  input: "",
+  handleInputChange: (
+    event:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLTextAreaElement>
+  ) => {},
+  handleSubmit: (event: React.FormEvent<HTMLFormElement>) => {},
 });
 
 
